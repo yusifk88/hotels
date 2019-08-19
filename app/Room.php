@@ -18,8 +18,12 @@ class Room extends Model
 
     public function reservations(){
 
-        return $this->hasMany(App\Reservation::class);
+        return $this->hasMany('App\Reservation');
 
+    }
+
+    public function images(){
+        return $this->hasMany('App\Image');
     }
 
 

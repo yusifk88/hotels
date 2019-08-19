@@ -11,7 +11,7 @@
                     <p class="card-title">Add New Room</p>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('rooms.store')}}" method="POST">
+                    <form action="{{route('rooms.store')}}" method="POST" enctype="multipart/form-data">
                         {{csrf_field()}}
 
                         <div class="md-form">
@@ -67,10 +67,8 @@
                         <div class="row mt-2">
                             <div class="col-md-4">
                                 <div class="card hoverable">
-                                    <div class="card-body p-5 align-content-center">
-
-                                        <i class="fa fa-plus-circle fa-2x text-muted"> Add Image</i>
-
+                                    <div class="card-body align-content-center">
+                                        <input required type="file" class="form-control form-control-file" name="photos[]">
                                     </div>
 
                                 </div>
@@ -78,19 +76,17 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="card hoverable">
-                                    <div class="card-body p-5 align-content-center">
-
-                                        <i class="fa fa-plus-circle fa-2x text-muted"> Add Image</i>
-
+                                    <div class="card-body  align-content-center">
+                                        <input required type="file" class="form-control form-control-file" name="photos[]">
                                     </div>
 
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="card hoverable">
-                                    <div class="card-body p-5 align-content-center">
+                                    <div class="card-body  align-content-center">
 
-                                        <i class="fa fa-plus-circle fa-2x text-muted"> Add Image</i>
+                                        <input required type="file" class="form-control form-control-file" name="photos[]">
 
                                     </div>
 
@@ -102,19 +98,9 @@
                         <div class="row mt-2">
                             <div class="col-md-4">
                                 <div class="card hoverable">
-                                    <div class="card-body p-5 align-content-center">
+                                    <div class="card-body align-content-center">
 
-                                        <i class="fa fa-plus-circle fa-2x text-muted"> Add Image</i>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card hoverable">
-                                    <div class="card-body p-5 align-content-center">
-
-                                        <i class="fa fa-plus-circle fa-2x text-muted"> Add Image</i>
+                                        <input type="file" class="form-control form-control-file" name="photos[]">
 
                                     </div>
 
@@ -122,9 +108,19 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="card hoverable">
-                                    <div class="card-body p-5 align-content-center">
+                                    <div class="card-body align-content-center">
 
-                                        <i class="fa fa-plus-circle fa-2x text-muted"> Add Image</i>
+                                        <input type="file" class="form-control form-control-file" name="photos[]">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card hoverable">
+                                    <div class="card-body align-content-center">
+                                        <input type="file" class="form-control form-control-file" name="photos[]">
+
 
                                     </div>
 

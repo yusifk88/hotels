@@ -18,6 +18,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/mdb.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-dialog.min.css') }}" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-dark sticky-top bg-primary flex-md-nowrap p-0">
@@ -121,7 +122,7 @@
 
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-            @yield('content');
+            @yield('content')
         </main>
 
     </div>
@@ -129,6 +130,8 @@
 
 <script src="{{ asset('js/app.js') }}" defer></script>
 <script src="{{ asset('js/mdb.min.js') }}" defer></script>
+<script src="{{ asset('js/bootstrap-dialog.min.js') }}" defer></script>
+<script src="{{ asset('js/myjs.js') }}" defer></script>
 
 </body>
 </html>

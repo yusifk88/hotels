@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Room;
-
+use App\Image;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class RoomsController extends Controller
@@ -15,10 +16,13 @@ class RoomsController extends Controller
      */
     public function index()
     {
-        $rooms = Room::Paginate(10);
+        if(!Auth::user()){
+            return view('auth.login');
+        }else{
+            $rooms = Room::Paginate(10);
+        }
 
-       return view('rooms.index',compact('rooms'));
-
+        return view('rooms.index',compact('rooms'));
     }
 
     /**
@@ -28,8 +32,13 @@ class RoomsController extends Controller
      */
     public function create()
     {
+        if(!Auth::user()){
+            return view('auth.login');
+        }else{
 
-        return view("rooms.create");
+            return view("rooms.create");
+        }
+
 
     }
 
@@ -41,17 +50,22 @@ class RoomsController extends Controller
      */
     public function store(Request $request)
     {
-       $create_room = Room::create([
-           'description'  =>$request['description'],
-           'bedType'      =>$request['bedtype'],
-           'price_perDay' => $request['amount_perDay'],
-           'info'         => $request['info']
-       ]);
 
-       if($create_room){
-           return back()->with('success','Room Saved Successfully');
-       }
+        if(Auth::user()) {
+            $create_room = Room::create([
+                'description' => $request['description'],
+                'bedType' => $request['bedtype'],
+                'price_perDay' => $request['amount_perDay'],
+                'info' => $request['info']
+            ]);
 
+            if ($create_room) {
+                $this->uploadImg($request, $create_room);
+
+                return redirect()->route('rooms.show',$create_room->id);
+//                return back()->with('success', 'Room Saved Successfully');
+            }
+        }
 
     }
 
@@ -63,9 +77,14 @@ class RoomsController extends Controller
      */
     public function show(Room $room)
     {
-        $getroom = Room::find($room->id);
-        return view('rooms.show',compact('getroom'));
+        if (!Auth::user()){
+            return view('auth.login');
+        }else{
 
+            $getroom = Room::find($room->id);
+            return view('rooms.show',compact('getroom'));
+
+        }
     }
 
     /**
@@ -76,8 +95,12 @@ class RoomsController extends Controller
      */
     public function edit(Room $room)
     {
-
-
+        if(!Auth::user()){
+            return view('auth.login');
+        }else{
+            $getroom = Room::find($room->id);
+            return view('rooms.edit',compact('getroom'));
+        }
     }
 
     /**
@@ -89,7 +112,19 @@ class RoomsController extends Controller
      */
     public function update(Request $request, Room $room)
     {
-        //
+
+        $update_room = Room::where('id',$room->id)->update([
+            'description' => $request['description'],
+            'bedType'     => $request['bedtype'],
+            'price_perday'=> $request['amount_perDay'],
+            'info'        => $request['info']
+    ]);
+
+        if($update_room){
+
+            return redirect()->route('rooms.show',$room->id)->with('success','Room updated Successfully');
+        }
+
     }
 
     /**
@@ -100,14 +135,32 @@ class RoomsController extends Controller
      */
     public function destroy(Room $room)
     {
-        //
+        if(Auth::user()){
+
+            $delroom = Room::find($room->id);
+            if($delroom){
+                $delroom->delete();
+                return redirect()->route('rooms.index');
+            }
+        }
     }
 
 
-    public function addimages(Room $room){
+    public function uploadImg($r, $room){
+        if($r->files){
+           foreach ($r->file('photos') as $photo){
+               $path = Storage::putFile('photos', $photo);
+              if($path){
 
-
-
+                  Image::create([
+                     'url'=> $path,
+                      'room_id' => $room->id
+                  ]);
+              }
+           }
+        }
     }
+
+
 
 }
